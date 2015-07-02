@@ -33,8 +33,15 @@ class Board
   end
 
   def make_move(origin, destination)
+    dx = destination.first - origin.first
+    dy = destination.first - origin.first
+
+    if dx.abs > 1 && dy.abs > 1
+      jumped_piece_pos = [origin.first + dx / 2, origin.last + dx / 2]
+      self[jumped_piece_pos] = sentinel
+    end
     self[origin].pos = destination
-    self[destination] = self[origin]    
+    self[destination] = self[origin]
     self[origin] = sentinel
   end
 

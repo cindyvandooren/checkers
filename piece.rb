@@ -34,9 +34,6 @@ class Piece
     p dx
     p dy
     p pos_jumped_piece
-    puts "pos_jumped_piece = [pos.first + dx, pos.last + dy] #{pos_jumped_piece = [pos.first + dx, pos.last + dy]}"
-    puts "move.diffs.include? #{move_diffs.include?([dx, dy])}"
-    puts "board[pos_jumped_piece].color == other_color #{board[pos_jumped_piece].color == other_color}"
     move_diffs.include?([dx, dy]) && board[pos_jumped_piece].color == other_color
   end
 
