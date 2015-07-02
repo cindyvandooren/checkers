@@ -1,14 +1,23 @@
 require 'byebug'
 require_relative 'emptysquares'
 require_relative 'piece'
+require 'colorize'
 
 class Board
-  attr_reader :sentinel
+  CURSOR_DELTAS = {
+                 "\e[A" => [-1, 0],
+                 "\e[B" => [ 1, 0],
+                 "\e[C" => [ 0, 1],
+                 "\e[D" => [ 0,-1]
+                 }
+
+  attr_reader :sentinel, :cursor
 
   def initialize(setup=true)
     @grid = Array.new(8) { Array.new(8) { EmptySquare.new } }
     @setup = setup
     @sentinel = EmptySquare.new
+    @cursor = [0, 0]
     populate if setup
   end
 
@@ -22,13 +31,44 @@ class Board
     @grid[row][col] = value
   end
 
+  def map_deltas(action)
+    future_cursor = cursor.map.with_index do |el, i|
+      el + CURSOR_DELTAS[action][i]
+    end
+    return unless on_board?(future_cursor)
+
+    @cursor = future_cursor
+  end
+
   def display
-    @grid.each do |row|
+    display_header
+    display_actual_board
+    display_header
+  end
+
+  def display_header
+    puts "   #{("a".."h").to_a.join("  ")}"
+  end
+
+  def display_actual_board
+    (0...8).each do |row_n|
       print_row = []
-      row.each do |square|
-        print_row << square.to_s
+      last_white = row_n.even? ? false : true
+      (0...8).each do |col_n|
+        pos = [row_n, col_n]
+        if cursor == pos
+          color = :white
+        elsif last_white
+          color = :cyan
+        else
+          color = :magenta
+        end
+        print_row << self[pos].to_s.colorize(background: color)
+        last_white = !last_white
       end
-      puts print_row.join(" ")
+      print_row.unshift("#{8 - row_n} ")
+      print_row.push(" #{8 - row_n}")
+      puts print_row.join
     end
   end
 
@@ -51,6 +91,14 @@ class Board
 
   def occupied?(pos)
     !self[pos].empty?
+  end
+
+  def on_board?(pos)
+    pos.all? { |el| el.between?(0, 7) }
+  end
+
+  def one_color?(color)
+    #are all the pieces on the board of the same color
   end
 
   private
@@ -80,6 +128,3 @@ class Board
         end
       end
 end
-
-a = Board.new(true)
-a.display
