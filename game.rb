@@ -6,7 +6,7 @@ class Game
 
   def initialize
     @board = Board.new
-    @players = [Player.new("W", :white, board), Player.new("B", :black, board)]
+    @players = [Player.new("B", :black, board), Player.new("W", :white, board)]
   end
 
   def run
@@ -22,8 +22,10 @@ class Game
     #player makes the first move
     system("clear")
     board.display
-    players.first.get_move
+    puts "It is #{players.first.name}'s turn'"
+    origin, destination = players.first.get_move
     #let the board perform the move
+    board.make_move(origin, destination)
 
     #players rotate, so now it is the next players turn
     players.rotate!

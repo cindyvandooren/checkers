@@ -11,13 +11,14 @@ class Board
                  "\e[D" => [ 0,-1]
                  }
 
-  attr_reader :sentinel, :cursor
+  attr_reader :sentinel, :cursor, :selected_piece
 
   def initialize(setup=true)
     @grid = Array.new(8) { Array.new(8) { EmptySquare.new } }
     @setup = setup
     @sentinel = EmptySquare.new
     @cursor = [0, 0]
+    @selected_piece = 0
     populate if setup
   end
 
@@ -29,6 +30,12 @@ class Board
   def []=(pos, value)
     row, col = pos
     @grid[row][col] = value
+  end
+
+  def make_move(origin, destination)
+    self[origin].pos = destination
+    self[destination] = self[origin]    
+    self[origin] = sentinel
   end
 
   def map_deltas(action)
@@ -44,6 +51,7 @@ class Board
     display_header
     display_actual_board
     display_header
+    puts "selected_piece #{selected_piece}"
   end
 
   def display_header
@@ -99,6 +107,10 @@ class Board
 
   def one_color?(color)
     #are all the pieces on the board of the same color
+  end
+
+  def toggle_select
+    @selected_piece = selected_piece == 0 ? cursor : 0
   end
 
   private

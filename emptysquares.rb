@@ -10,4 +10,8 @@ class EmptySquare
   def to_s
     "   "
   end
+
+  def color
+    false
+  end
 end

@@ -2,7 +2,8 @@ require 'io/console'
 
 class Player
   ARROWS = ["\e[A", "\e[B", "\e[C", "\e[D"]
-  attr_reader :board
+
+  attr_reader :board, :color, :name
 
   def initialize(name, color, board)
     @name = name
@@ -11,8 +12,30 @@ class Player
   end
 
   def get_move
-    origin = get_pos
+    begin
+      origin = get_pos
+      until valid_origin?(origin)
+        origin = get_pos
+      end
 
+      board.toggle_select
+      destination = find_destination(origin)
+    rescue InvalidMoveError
+      board.toggle_select
+      retry
+    end
+    board.toggle_select
+
+    [origin, destination]
+  end
+
+  def find_destination(origin)
+    destination = get_pos
+    until valid_destination?(origin, destination)
+      destination = get_pos
+    end
+
+    destination
   end
 
   def get_pos
@@ -25,6 +48,17 @@ class Player
       system("clear")
       board.display
     end
+
+    board.cursor
+  end
+
+  def valid_origin?(pos)
+    board[pos].color == color
+  end
+
+  def valid_destination?(origin, destination)
+    raise InvalidMoveError if origin == destination
+    board[origin].perform_slide?(destination) || board[origin].perform_jump?(destination)
   end
 
   def get_movement
@@ -42,4 +76,7 @@ class Player
 
     return input
   end
+end
+
+class InvalidMoveError < StandardError
 end
