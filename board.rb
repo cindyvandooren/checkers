@@ -52,7 +52,7 @@ class Board
     puts "dx #{dx}"
     puts "dy #{dy}"
     puts "jumped_piece_pos #{jumped_piece_pos}"
-    puts "self[destination].king #{self[destination].king}"
+    puts "self[destination].king #{self[destination].maybe_promote}"
 
   end
 

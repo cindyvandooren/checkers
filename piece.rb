@@ -55,8 +55,11 @@ class Piece
 
   def maybe_promote
     #We want to promote a piece if the piece gets to the other side of the board. For a black piece this is, when it reaches row 0, for a white piece, it needs to reach row 7.
+
     end_row_number = color == :white ? 7 : 0
-    king = true if pos.first == end_row_number
+    puts "end_row_number #{end_row_number}"
+    @king = true if pos.first == end_row_number
+
   end
 
   def dup(duped_board)
@@ -82,9 +85,9 @@ class Piece
   def to_s
     #used to display the piece on the board
     if color == :white
-      king ? " WK " : " W "
+      king ? "WK " : " W "
     else
-      king ? " BK " : " B "
+      king ? "BK " : " B "
     end
   end
 end
