@@ -1,4 +1,6 @@
 class Piece
+  attr_reader :color
+
   def initialize(pos, color, board)
     @pos = pos
     @color = color
@@ -23,6 +25,15 @@ class Piece
 
   def maybe_promote
 
+  end
+
+  def to_s
+    #used to display the piece on the board
+    if color == :white
+      "W"
+    else
+      "B"
+    end
   end
 
 
