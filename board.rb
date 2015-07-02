@@ -34,10 +34,10 @@ class Board
 
   def make_move(origin, destination)
     dx = destination.first - origin.first
-    dy = destination.first - origin.first
+    dy = destination.last - origin.last
 
     if dx.abs > 1 && dy.abs > 1
-      jumped_piece_pos = [origin.first + dx / 2, origin.last + dx / 2]
+      jumped_piece_pos = [origin.first + (dx / 2), origin.last + (dy / 2)]
       self[jumped_piece_pos] = sentinel
     end
 
@@ -48,6 +48,12 @@ class Board
 
     #now test if the moved piece should become a king
     self[destination].maybe_promote
+    puts "in make move"
+    puts "dx #{dx}"
+    puts "dy #{dy}"
+    puts "jumped_piece_pos #{jumped_piece_pos}"
+    puts "self[destination].king #{self[destination].king}"
+
   end
 
   def map_deltas(action)

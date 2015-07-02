@@ -17,6 +17,11 @@ class Piece
     #the (dx, dy) between origin and destination are in the piece.move_diffs and there is no other piece in the destination.
     dx = destination.first - pos.first
     dy = destination.last - pos.last
+    puts "in slide"
+    puts "destination #{destination}"
+    puts "pos #{pos}"
+    puts "dx #{dx}"
+    puts "dy #{dy}"
 
     move_diffs.include?([dx, dy]) && !board.occupied?(destination)
   end
@@ -28,11 +33,12 @@ class Piece
     dx = (destination.first - pos.first) / 2
     dy = (destination.last - pos.last) / 2
     pos_jumped_piece = [pos.first + dx, pos.last + dy]
-    p destination
-    p pos
-    p dx
-    p dy
-    p pos_jumped_piece
+    puts "in jump"
+    puts "destination #{destination}"
+    puts "pos #{pos}"
+    puts "dx #{dx}"
+    puts "dy #{dy}"
+    puts "pos_jumped_piece #{pos_jumped_piece}"
     move_diffs.include?([dx, dy]) && board[pos_jumped_piece].color == other_color
   end
 
