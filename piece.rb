@@ -13,8 +13,11 @@ class Piece
   end
 
   def perform_slide(origin, destination)
-
-
+    #illegal slide should return false, else true
+    #needs to check if the piece can be promoted to king
+    #a slide can be performed when: 1) the (dx, dy) between origin and destination are in the piece.move_diffs and there is no other piece in the destination.
+    #Not sure if dup of the board is needed.
+    
   end
 
   def perform_jump
@@ -40,6 +43,10 @@ class Piece
 
   def dup(duped_board)
     Piece.new(pos.dup, color, duped_board, king)
+  end
+
+  def empty?
+    false
   end
 
   def to_s

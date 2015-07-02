@@ -4,7 +4,7 @@ require_relative 'piece'
 
 class Board
   attr_reader :sentinel
-  
+
   def initialize(setup=true)
     @grid = Array.new(8) { Array.new(8) { EmptySquare.new } }
     @setup = setup
@@ -28,7 +28,7 @@ class Board
       row.each do |square|
         print_row << square.to_s
       end
-      puts print_row.join()
+      puts print_row.join(" ")
     end
   end
 
@@ -47,6 +47,10 @@ class Board
 
   def remove_piece(pos)
     self[pos] = sentinel
+  end
+
+  def occupied?(pos)
+    !self[pos].empty?
   end
 
   private

@@ -3,6 +3,10 @@ class EmptySquare
     EmptySquare.new
   end
 
+  def empty?
+    true
+  end
+
   def to_s
     "_"
   end
