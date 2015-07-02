@@ -40,9 +40,14 @@ class Board
       jumped_piece_pos = [origin.first + dx / 2, origin.last + dx / 2]
       self[jumped_piece_pos] = sentinel
     end
-    self[origin].pos = destination
+
+    #make sure that the position of the piece gets set to the new position
+    self[origin].set_position(destination)
     self[destination] = self[origin]
     self[origin] = sentinel
+
+    #now test if the moved piece should become a king
+    self[destination].maybe_promote
   end
 
   def map_deltas(action)
@@ -81,8 +86,8 @@ class Board
         print_row << self[pos].to_s.colorize(background: color)
         last_white = !last_white
       end
-      print_row.unshift("#{8 - row_n} ")
-      print_row.push(" #{8 - row_n}")
+      print_row.unshift("#{row_n} ") #put 8 - row_n back after debugging
+      print_row.push(" #{row_n}") #put 8 - row_n back after debugging
       puts print_row.join
     end
   end

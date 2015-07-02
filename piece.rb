@@ -3,8 +3,7 @@ class Piece
 
   BLACK_DELTAS = [[-1, -1], [-1, 1]]
 
-  attr_reader :color, :king, :board
-  attr_accessor :pos
+  attr_reader :color, :king, :board, :pos
 
   def initialize(pos, color, board, king=false)
     @pos = pos
@@ -60,6 +59,10 @@ class Piece
 
   def empty?
     false
+  end
+
+  def set_position(new_pos)
+    @pos = new_pos
   end
 
   def other_color

@@ -26,6 +26,7 @@ class Game
     origin, destination = players.first.get_move
     #let the board perform the move
     board.make_move(origin, destination)
+    
 
     #players rotate, so now it is the next players turn
     players.rotate!
