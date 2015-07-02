@@ -83,4 +83,3 @@ end
 
 a = Board.new(true)
 a.display
-a.deep_dup

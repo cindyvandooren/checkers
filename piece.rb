@@ -3,7 +3,7 @@ class Piece
 
   BLACK_DELTAS = [[-1, -1], [-1, 1]]
 
-  attr_reader :color, :pos, :king
+  attr_reader :color, :pos, :king, :board
 
   def initialize(pos, color, board, king=false)
     @pos = pos
@@ -13,11 +13,12 @@ class Piece
   end
 
   def perform_slide(origin, destination)
-    #illegal slide should return false, else true
-    #needs to check if the piece can be promoted to king
-    #a slide can be performed when: 1) the (dx, dy) between origin and destination are in the piece.move_diffs and there is no other piece in the destination.
-    #Not sure if dup of the board is needed.
-    
+    #slide is possible when:
+    #the (dx, dy) between origin and destination are in the piece.move_diffs and there is no other piece in the destination.
+    dx = destination.first - origin.first
+    dy = destination.last - origin.last
+
+    move_diffs.include?([dx, dy]) && !board.occupied?(destination)
   end
 
   def perform_jump
@@ -52,9 +53,9 @@ class Piece
   def to_s
     #used to display the piece on the board
     if color == :white
-      "W"
+      king ? "WK" : "W"
     else
-      "B"
+      king ? "BK" : "B"
     end
   end
 end
