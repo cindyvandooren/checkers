@@ -3,9 +3,12 @@ require_relative 'emptysquares'
 require_relative 'piece'
 
 class Board
+  attr_reader :sentinel
+  
   def initialize(setup=true)
     @grid = Array.new(8) { Array.new(8) { EmptySquare.new } }
     @setup = setup
+    @sentinel = EmptySquare.new
     populate if setup
   end
 
@@ -42,6 +45,9 @@ class Board
     new_board
   end
 
+  def remove_piece(pos)
+    self[pos] = sentinel
+  end
 
   private
 

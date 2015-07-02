@@ -1,4 +1,8 @@
 class Piece
+  WHITE_DELTAS = [[1, -1], [1, 1]]
+
+  BLACK_DELTAS = [[-1, -1], [-1, 1]]
+
   attr_reader :color, :pos, :king
 
   def initialize(pos, color, board, king=false)
@@ -8,9 +12,9 @@ class Piece
     @king = false
   end
 
-  def perform_slide
-    #illegal slide should return false, else true
-    #needs to check if the piece can be promoted to king
+  def perform_slide(origin, destination)
+
+
   end
 
   def perform_jump
@@ -20,7 +24,14 @@ class Piece
   end
 
   def move_diffs
-    #returns directions a piece can move in
+    case
+    when king
+      WHITE_DELTAS + BLACK_DELTAS
+    when color == :white
+      WHITE_DELTAS
+    when color == :black
+      BLACK_DELTAS
+    end
   end
 
   def maybe_promote
@@ -39,7 +50,4 @@ class Piece
       "B"
     end
   end
-
-
-
 end
