@@ -8,6 +8,6 @@ class EmptySquare
   end
 
   def to_s
-    "_"
+    "   "
   end
 end
