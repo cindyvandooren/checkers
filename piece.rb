@@ -1,7 +1,7 @@
 class Piece
-  attr_reader :color
+  attr_reader :color, :pos, :king
 
-  def initialize(pos, color, board)
+  def initialize(pos, color, board, king=false)
     @pos = pos
     @color = color
     @board = board
@@ -25,6 +25,10 @@ class Piece
 
   def maybe_promote
 
+  end
+
+  def dup(duped_board)
+    Piece.new(pos.dup, color, duped_board, king)
   end
 
   def to_s

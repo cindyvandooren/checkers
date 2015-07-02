@@ -1,10 +1,9 @@
 class EmptySquare
-
-  def initialize
+  def dup(duped_board)
+    EmptySquare.new
   end
 
   def to_s
-    #Used to print the squares on the board
     "_"
   end
 end
