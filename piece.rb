@@ -12,11 +12,11 @@ class Piece
     @king = false
   end
 
-  def perform_slide(origin, destination)
+  def perform_slide(destination)
     #slide is possible when:
     #the (dx, dy) between origin and destination are in the piece.move_diffs and there is no other piece in the destination.
-    dx = destination.first - origin.first
-    dy = destination.last - origin.last
+    dx = destination.first - pos.first
+    dy = destination.last - pos.last
 
     move_diffs.include?([dx, dy]) && !board.occupied?(destination)
   end
