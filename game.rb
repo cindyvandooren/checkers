@@ -1,5 +1,10 @@
 require_relative 'board'
 require_relative 'player'
+require_relative 'errors'
+
+##TODO write game_over method in game and board
+##TODO Game does not remove the jumped over pieces when jumping over several pieces, the game can move over empty squares and can slide over longer distances without squares being there. Does not use move sequences! Start with building make move sequence method in piece class.
+##TODO removes unnecessary putses
 
 class Game
   attr_reader :board, :players
@@ -24,8 +29,8 @@ class Game
     board.display
     puts "It is #{players.first.name}'s turn'"
     origin, destination = players.first.get_move
-    #let the board perform the move
-    board.make_move(origin, destination)
+    #try to perform the move
+    board[origin].move(origin, destination)
 
 
     #players rotate, so now it is the next players turn
@@ -44,6 +49,3 @@ end
 
 game = Game.new
 game.run
-
-class InvalidMoveError < StandardError
-end

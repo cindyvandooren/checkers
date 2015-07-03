@@ -1,3 +1,5 @@
+require_relative 'errors'
+
 class Piece
   WHITE_DELTAS = [[1, -1], [1, 1]]
 
@@ -46,6 +48,15 @@ class Piece
     else
       return true
     end
+  end
+
+  def move(origin, destination)
+    move_sequence = make_move_sequence(origin, destination)
+    valid_move_seq?(move_sequence)
+  end
+
+  def make_move_sequence(origin, destination)
+    #start at origin and see how you can get from origin to destination only using the applicable deltas
   end
 
   def perform_moves(move_sequence, board)
@@ -103,7 +114,6 @@ class Piece
     end_row_number = color == :white ? 7 : 0
     puts "end_row_number #{end_row_number}"
     @king = true if pos.first == end_row_number
-
   end
 
   def dup(duped_board)

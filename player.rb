@@ -1,4 +1,5 @@
 require 'io/console'
+require_relative 'errors'
 
 class Player
   ARROWS = ["\e[A", "\e[B", "\e[C", "\e[D"]
@@ -57,7 +58,7 @@ class Player
   end
 
   def valid_destination?(origin, destination)
-    origin != destination && board[pos].empty?
+    origin != destination && board[destination].empty?
   end
 
   # def valid_destination?(origin, destination)
