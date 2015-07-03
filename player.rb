@@ -57,7 +57,11 @@ class Player
   end
 
   def valid_destination?(origin, destination)
-    origin != destination && board[pos].color == other_color    
+    origin != destination && board[pos].color == other_color
+  end
+
+  def other_color
+    color == :white ? :black : :white
   end
 
   # def valid_destination?(origin, destination)
