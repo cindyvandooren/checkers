@@ -119,11 +119,7 @@ class Piece
   end
 
   def other_color
-    if self.color == :white
-      :black
-    else
-      :white
-    end
+    color == :white ? :black : :white
   end
 
   def to_s

@@ -57,9 +57,13 @@ class Player
   end
 
   def valid_destination?(origin, destination)
-    raise InvalidMoveError if origin == destination
-    board[origin].perform_slide?(destination) || board[origin].perform_jump?(destination)
+    origin != destination && board[pos].color == other_color    
   end
+
+  # def valid_destination?(origin, destination)
+  #   raise InvalidMoveError if origin == destination
+  #   board[origin].perform_slide?(destination) || board[origin].perform_jump?(destination)
+  # end
 
   def get_movement
     STDIN.echo = false
