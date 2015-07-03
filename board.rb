@@ -1,7 +1,7 @@
 require 'byebug'
+require 'colorize'
 require_relative 'emptysquares'
 require_relative 'piece'
-require 'colorize'
 
 class Board
   CURSOR_DELTAS = {

@@ -44,3 +44,6 @@ end
 
 game = Game.new
 game.run
+
+class InvalidMoveError < StandardError
+end

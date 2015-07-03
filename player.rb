@@ -77,6 +77,3 @@ class Player
     return input
   end
 end
-
-class InvalidMoveError < StandardError
-end

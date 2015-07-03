@@ -3,13 +3,57 @@ class Piece
 
   BLACK_DELTAS = [[-1, -1], [-1, 1]]
 
-  attr_reader :color, :king, :board, :pos
+  attr_reader :color, :king, :pos
+  attr_accessor :board
 
   def initialize(pos, color, board, king=false)
     @pos = pos
     @color = color
     @board = board
     @king = false
+  end
+
+  def perform_moves!(move_sequence, duped_board)
+    #performs the moves one by one. If a move in the sequence fails an InvalidMoveError should be raised.
+    #if the sequence is one move long try sliding, if that doesn't work try jumping
+    #if the sequence is multiple moves long, every move must be a jump
+    if move_sequence.count <= 1
+      next_move = move_sequence.shift
+      if perform_slide?(next_move) || perform_jump?(next_move)
+        duped_board.make_move(pos, next_move)
+      else
+        raise InvalidMoveError
+      end
+    else
+      until move_sequence.empty?
+        next_move = move_sequence.shift
+        if perform_jump?(next_move)
+          duped_board.make_move(pos, next_move)
+        else
+          raise InvalidMoveError
+        end
+      end
+    end
+  end
+
+  def valid_move_seq?(move_sequence)
+    #calls perform_moves! on a duped board and if no error is raised it returns true, else false
+    duped_board = Board.new(false)
+    begin
+      perform_moves!(move_sequence, duped_board)
+    rescue InvalidMoveError
+      return false
+    else
+      return true
+    end
+  end
+
+  def perform_moves(move_sequence, board)
+    if valid_move_seq?(move_sequence)
+      perform_moves(move_sequence, board)
+    else
+      raise InvalidMoveError
+    end
   end
 
   def perform_slide?(destination)
